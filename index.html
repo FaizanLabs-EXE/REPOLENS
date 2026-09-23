@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080b14">
+  <meta name="description" content="RepoLens — GitHub discovery, health intelligence and automation dashboard.">
+  <title>RepoLens — GitHub Intelligence</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <div class="bg-grid"></div>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">⌁</span><span>Repo<span>Lens</span></span></a>
+    <div class="top-actions">
+      <button id="themeBtn" class="icon-btn" title="Toggle theme">◐</button>
+      <button id="tokenBtn" class="ghost-btn">GitHub Token</button>
+      <button id="installBtn" class="primary-btn hidden">Install App</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow"><span class="pulse"></span> LIVE GITHUB INTELLIGENCE</div>
+      <h1>Find the repo that<br><em>actually solves it.</em></h1>
+      <p class="hero-copy">Search GitHub by intent, inspect project health, compare candidates and turn discoveries into an actionable build plan.</p>
+      <div class="search-wrap">
+        <div class="search-icon">⌕</div>
+        <input id="searchInput" autocomplete="off" placeholder="Try: self hosted password manager for teams">
+        <select id="sortSelect" aria-label="Sort">
+          <option value="best-match">Best match</option>
+          <option value="stars">Stars</option>
+          <option value="updated">Recently updated</option>
+          <option value="forks">Forks</option>
+        </select>
+        <button id="searchBtn" class="search-btn">Search</button>
+      </div>
+      <div class="chips">
+        <button data-q="AI agent framework">AI agents</button>
+        <button data-q="self hosted automation">Self-hosted automation</button>
+        <button data-q="developer dashboard">Developer dashboards</button>
+        <button data-q="privacy first tools">Privacy-first</button>
+      </div>
+    </section>
+
+    <section class="metrics">
+      <div><b id="resultCount">0</b><span>results loaded</span></div>
+      <div><b id="selectedCount">0</b><span>in compare</span></div>
+      <div><b id="apiStatus">READY</b><span>API status</span></div>
+      <div><b id="clock">--:--:--</b><span>local time</span></div>
+    </section>
+
+    <section class="workspace">
+      <aside class="sidebar">
+        <div class="panel-head"><span>DISCOVERY</span><span class="kbd">⌘ K</span></div>
+        <button class="nav active" data-view="search">⌕ <span>Smart Search</span></button>
+        <button class="nav" data-view="trending">↗ <span>Trending Scan</span></button>
+        <button class="nav" data-view="compare">◫ <span>Compare Lab</span><b id="compareBadge">0</b></button>
+        <button class="nav" data-view="saved">★ <span>Saved Repos</span></button>
+        <div class="side-note">
+          <strong>What makes it different?</strong>
+          <p>Intent search + explainable health signals + side-by-side comparison in one lightweight PWA.</p>
+        </div>
+        <div class="signature">╰─➤ ⚡ <strong>𝐁𝐔𝐈𝐋𝐓 𝐁𝐘 𝐅𝐀𝐈𝐙𝐀𝐍™</strong></div>
+      </aside>
+
+      <div class="content">
+        <div id="searchView" class="view">
+          <div class="section-head"><div><span class="eyebrow">DISCOVERY FEED</span><h2>Results</h2></div><button id="exportBtn" class="ghost-btn">Export JSON</button></div>
+          <div id="results" class="results empty"><div class="empty-icon">⌁</div><h3>Search for a real problem</h3><p>RepoLens will query GitHub and turn raw repositories into useful signals.</p></div>
+        </div>
+
+        <div id="trendingView" class="view hidden">
+          <div class="section-head"><div><span class="eyebrow">AUTOMATED SCAN</span><h2>Trending Radar</h2></div><button id="trendBtn" class="primary-btn">Run Scan</button></div>
+          <div class="radar-card"><div class="radar"></div><div><h3>Live topic sweep</h3><p>Scans several high-interest developer categories and surfaces repositories with recent activity.</p></div></div>
+          <div id="trendingResults" class="results"></div>
+        </div>
+
+        <div id="compareView" class="view hidden">
+          <div class="section-head"><div><span class="eyebrow">DECISION WORKSPACE</span><h2>Compare Lab</h2></div><button id="clearCompare" class="ghost-btn">Clear</button></div>
+          <div id="compareResults" class="compare-grid"></div>
+        </div>
+
+        <div id="savedView" class="view hidden">
+          <div class="section-head"><div><span class="eyebrow">YOUR LIBRARY</span><h2>Saved Repos</h2></div></div>
+          <div id="savedResults" class="results"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <dialog id="tokenDialog">
+    <form method="dialog" class="dialog-card">
+      <button class="dialog-close" value="cancel">×</button>
+      <span class="eyebrow">OPTIONAL</span><h2>GitHub token</h2>
+      <p>A token raises GitHub API limits. It stays in this browser only and is never sent anywhere except GitHub.</p>
+      <input id="tokenInput" type="password" placeholder="github_pat_…">
+      <div class="dialog-actions"><button value="cancel" class="ghost-btn">Cancel</button><button id="saveToken" value="default" class="primary-btn">Save locally</button></div>
+    </form>
+  </dialog>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
